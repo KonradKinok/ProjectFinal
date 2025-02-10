@@ -1,0 +1,19 @@
+.main-container {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    background-color: var(--header-background);
+    padding: 5px;
+    height: 56px;
+}
+
+// .main {
+//     display: flex;
+//     flex-direction: column;
+//     background-color: var(--main-background);
+//     grid-row: 2;
+// }
