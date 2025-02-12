@@ -12,7 +12,7 @@ export const Navigation = () => {
       </NavLink>
 
       <NavLink
-        to="/reports"
+        to="/transaction/"
         state={{ from: location.pathname }}
         className={({ isActive }) => (isActive ? scss.active : "")}>
         Reports

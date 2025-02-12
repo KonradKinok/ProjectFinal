@@ -7,17 +7,14 @@ const LayoutPages = lazy(() =>
     default: module.LayoutPages,
   })),
 );
-const ReportsPage = lazy(() =>
-  import("./pages/Reports/ReportsPage").then((module) => ({
-    default: module.ReportsPage,
-  })),
-);
-
+const ReportExpensesPage = lazy(() => import('./pages/ReportExpensesPage/ReportExpensesPage'));
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LayoutPages />} >
-        <Route path="/reports" element={<ReportsPage />} />
+        <Route index element={<HomePage />} />
+        <Route path="/transaction/" element={<ReportExpensesPage />} />
       </Route>
     </Routes>
   );

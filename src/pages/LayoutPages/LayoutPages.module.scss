@@ -1,5 +1,5 @@
 .main-container {
-    width: 1280px;
+    max-width: 1280px;
     margin: 0 auto;
 }
 
@@ -17,3 +17,5 @@
 //     background-color: var(--main-background);
 //     grid-row: 2;
 // }
+
+@media screen and (min-width: 321px) and (max-width: 767px) {}
