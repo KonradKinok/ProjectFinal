@@ -15,16 +15,16 @@ export const IncomeExpensesComparison = ({ expenses, income }) => {
         <div className={css["reports-expenses-income-row-main-container"]}>
             <div className={css["reports-expenses-income-row-container"]}>
                 <p className={css[""]}>Expenses:</p>
-                <p className={css["reports-expenses-value"]}>
-                    -{formatCurrency(expenses)} $
+                <p className={`${css["reports-value"]} ${css["reports-expenses-value"]}`}>
+                    - {formatCurrency(expenses)} $
                 </p>
             </div>
-            <svg width="2" height="36">
+            <svg className={css["reports-icon-divider"]} >
                 <use href={`${icon}#icon-divider`}></use>
             </svg>
             <div className={css["reports-expenses-income-row-container"]}>
                 <p className={css[""]}>Income:</p>
-                <p className={css["reports-income-value"]}>
+                <p className={`${css["reports-value"]} ${css["reports-income-value"]}`}>
                     + {formatCurrency(income)} $
                 </p>
             </div>

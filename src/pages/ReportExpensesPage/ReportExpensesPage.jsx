@@ -3,6 +3,7 @@ import { MainPageButton } from "../../components/MainPageButton/MainPageButton";
 import { ImportedMiddleMenu } from "../../components/ImportedMiddleMenu/ImportedMiddleMenu";
 import { CurrentPeriodButton } from "../../components/CurrentPeriodButton/CurrentPeriodButton";
 import { IncomeExpensesComparison } from "../../components/IncomeExpensesComparison/IncomeExpensesComparison";
+import { ExpensesDetailedReport } from "../../components/ExpensesDetailedReport/ExpensesDetailedReport";
 import css from "./ReportExpensesPage.module.css";
 
 const ReportExpensesPage = () => {
@@ -67,7 +68,9 @@ const ReportExpensesPage = () => {
       <div className={css["reports-page-second-container"]}>
         <IncomeExpensesComparison expenses={expenses} income={income} />
       </div>
-      <div>Expenses TableIcons/ Income Icons</div>
+      <div>
+        <ExpensesDetailedReport />
+      </div>
       <div>Expenses Wykres/ Income Wykres</div>
     </div>
   );

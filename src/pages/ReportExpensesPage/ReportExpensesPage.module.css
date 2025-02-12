@@ -6,7 +6,7 @@
 
   max-width: var(--reports-page-width);
   font-family: var(--font-family);
-  margin: 40px auto 0;
+  margin: 40px 123px 0;
   display: flex;
   flex-direction: column;
 }
@@ -15,4 +15,16 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+ }
+
+@media screen and (min-width: 772px) and (max-width: 1033px) {
+  .reports-page-main-container {
+      margin: 40px 32px 0;
+    }
+}
+
+ @media screen and (max-width: 771px) {
+  .reports-page-main-container {
+    margin: 16px 20px 0;
+  }
  }
