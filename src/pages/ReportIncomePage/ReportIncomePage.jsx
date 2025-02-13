@@ -4,16 +4,16 @@ import { ImportedMiddleMenu } from "../../components/ImportedMiddleMenu/Imported
 import { CurrentPeriodButton } from "../../components/CurrentPeriodButton/CurrentPeriodButton";
 import { IncomeExpensesComparison } from "../../components/IncomeExpensesComparison/IncomeExpensesComparison";
 import { ExpensesDetailedReport } from "../../components/ExpensesDetailedReport/ExpensesDetailedReport";
-import css from "./ReportExpensesPage.module.css";
+import css from "./ReportIncomePage.module.css";
 
-const ReportExpensesPage = () => {
+const ReportIncomePage = () => {
   const [date, setDate] = useState(new Date());
-  const [totalExpenses, setTotalExpenses] = useState(0);
-  const [totalIncome, setTotalIncome] = useState(0);
+  const [expenses, setExpenses] = useState(0);
+  const [income, setIncome] = useState(0);
 
   useEffect(() => {
-    const token = "token"; //to delete
-
+    const token = localStorage.getItem("token");
+    if (!token) return console.log("No token found");
 
     const fetchTransactionData = async () => {
       try {
@@ -34,21 +34,20 @@ const ReportExpensesPage = () => {
           const data = await response.json();
           const transaction = data[0]; //to delete
           console.log({ data })
-          setTotalExpenses(transaction.expenses.total || 0);
-          setTotalIncome(transaction.incomes.total || 0);
-
+          setExpenses(transaction.expenses.total || 0);
+          setIncome(transaction.incomes.total || 0);
         }
         else {
           const errorData = await response.json();
           console.error(errorData.message);
-          setTotalExpenses(0);
-          setTotalIncome(0);
+          setExpenses(0);
+          setIncome(0);
         }
 
       } catch (error) {
         console.error("Error fetching transaction data:", error);
-        setTotalExpenses(0);
-        setTotalIncome(0);
+        setExpenses(0);
+        setIncome(0);
       }
     };
 
@@ -67,9 +66,9 @@ const ReportExpensesPage = () => {
       </div>
 
       <div className={css["reports-page-second-container"]}>
-        <IncomeExpensesComparison expenses={totalExpenses} income={totalIncome} />
+        <IncomeExpensesComparison expenses={expenses} income={income} />
       </div>
-      <div className={css["reports-page-third-container"]}>
+      <div>
         <ExpensesDetailedReport />
       </div>
       <div>Expenses Wykres/ Income Wykres</div>
@@ -77,4 +76,4 @@ const ReportExpensesPage = () => {
   );
 };
 
-export default ReportExpensesPage;
+export default ReportIncomePage;

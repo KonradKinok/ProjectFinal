@@ -7,14 +7,16 @@ const LayoutPages = lazy(() =>
     default: module.LayoutPages,
   })),
 );
-const ReportExpensesPage = lazy(() => import('./pages/ReportExpensesPage/ReportExpensesPage'));
 const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
+const ReportExpensesPage = lazy(() => import('./pages/ReportExpensesPage/ReportExpensesPage'));
+const ReportIncomePage = lazy(() => import('./pages/ReportIncomePage/ReportIncomePage'));
 export const App = () => {
   return (
     <Routes>
       <Route path="/" element={<LayoutPages />} >
         <Route index element={<HomePage />} />
-        <Route path="/transaction/" element={<ReportExpensesPage />} />
+        <Route path='/transaction/expense-categories' element={<ReportExpensesPage />} />
+        <Route path='/transaction/income-categories' element={<ReportIncomePage />} />
       </Route>
     </Routes>
   );
