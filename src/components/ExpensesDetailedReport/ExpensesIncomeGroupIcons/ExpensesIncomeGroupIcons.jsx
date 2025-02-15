@@ -1,7 +1,9 @@
+import PropTypes from "prop-types";
 import { ExpensesIncomeIcon } from "../ExpensesIncomeIcon/ExpencesIncomeIcon";
+import { TRANSACTION } from "../ExpensesDetailedReport";
 import css from "./ExpensesIncomeGroupIcons.module.css";
 
-const dataToGroupIconsExpenses = [
+const dataToGroupIconsExpenses = [ //to delete
   {
     name: "Products",
     iconName: "icon-icon-products",
@@ -60,13 +62,33 @@ const dataToGroupIconsExpenses = [
   },
 ]
 
-export const ExpensesIncomeGroupIcons = () => {
+const dataToGroupIconsIncome = [ //to delete
+  {
+    name: "Salary",
+    iconName: "icon-icon-additional-income",
+    amount: "455000"
+  },
+  {
+    name: "Add. Income",
+    iconName: "icon-icon-salary",
+    amount: "1500"
+  },
+]
+
+export const ExpensesIncomeGroupIcons = ({ expensesIncomeText }) => {
+  const selectedData =
+    expensesIncomeText === TRANSACTION.EXPENSES ? dataToGroupIconsExpenses : dataToGroupIconsIncome; //to change to data from the server or props
 
   return (
     <div className={css["reports-group-icons-main-container"]}>
-      {dataToGroupIconsExpenses.map(({ name, iconName, amount }) => (
+      {selectedData.map(({ name, iconName, amount }) => (
         <ExpensesIncomeIcon key={name} name={name} iconName={iconName} amount={amount} />
       ))}
     </div>
   );
 };
+
+//PropTypes from ExpensesDetailedReport
+ExpensesIncomeGroupIcons.propTypes = {
+  expensesIncomeText: PropTypes.string.isRequired,
+}; 

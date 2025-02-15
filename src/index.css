@@ -33,7 +33,9 @@
   /* footer */
   --footer-background: rgb(30, 144, 255);
   --footer-text-color: rgb(0, 0, 255);
-
+  /* project */
+--text-light-color: white;
+  --text-dark-color: black;
 }
 
 body {

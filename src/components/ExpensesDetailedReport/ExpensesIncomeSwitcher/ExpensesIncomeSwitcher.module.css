@@ -7,14 +7,8 @@
   letter-spacing: 0.04em;
   color: rgba(82, 85, 95, 0.7);
   user-select: none;
-  
+  padding: 20px 0;
 }
-
-/* .reports-calendar-month-date-container {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-} */
 
 .reports-expenses-income-switcher-name {
   font-weight: 700;
@@ -22,7 +16,7 @@
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-align: center;
-  color: #000;
+  color: var(--text-dark-color);
   min-width: 96px;
   padding-left: 16px;
   padding-right: 16px;

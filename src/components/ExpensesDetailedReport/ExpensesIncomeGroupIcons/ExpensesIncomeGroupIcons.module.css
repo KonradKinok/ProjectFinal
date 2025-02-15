@@ -1,23 +1,24 @@
-/* .reports-group-icons-main-container {
-  display: grid;
-  max-width: calc(100vw - 10px);
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-  grid-gap: 16px;
-  margin-top: 0;
-  margin-bottom: 0;
-  padding: 10px;
-  list-style: none;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: x-small;
-} */
-
 .reports-group-icons-main-container {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-margin: 0 100px;
-column-gap: 33px;
-row-gap: 40px;
+  margin: 0 170px;
+  column-gap: 33px;
+  row-gap: 40px;
+  padding-bottom: 20px;
+}
+
+@media screen and (min-width: 772px) and (max-width: 1279px) {
+  .reports-group-icons-main-container {
+    margin: 0 40px;
+    column-gap: 18px;
+  }
+}
+
+@media screen and (max-width: 771px) {
+  .reports-group-icons-main-container {
+    margin: 0 20px;
+    column-gap: 13px;
+  }
 }
