@@ -12,12 +12,9 @@ const ReportIncomePage = () => {
   const [income, setIncome] = useState(0);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) return console.log("No token found");
 
     const fetchTransactionData = async () => {
       try {
-
 
         const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 
@@ -26,7 +23,7 @@ const ReportIncomePage = () => {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer `,
           },
         });
 
@@ -53,7 +50,6 @@ const ReportIncomePage = () => {
 
     fetchTransactionData();
   }, [date]);
-
 
 
   return (
