@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import css from "./ExpensesChart.module.css";
+import css from "./IncomeChart.module.css";
 
 const dataToChartExpenses = [//to delete
   { name: "Pork", amount: 1000 },

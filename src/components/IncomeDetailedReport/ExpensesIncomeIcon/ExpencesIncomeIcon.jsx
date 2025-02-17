@@ -2,6 +2,8 @@ import PropTypes from "prop-types";
 import css from "./ExpencesIncomeIcon.module.css";
 import icon from "../../../assets/svgs-sprite.svg";
 
+
+
 export const ExpensesIncomeIcon = ({ name, iconName, amount }) => {
 
   const formatCurrency = (value) => {
