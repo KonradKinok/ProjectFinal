@@ -11,7 +11,7 @@ export const BalanceComponent = () => {
     const modal = document.querySelector("#modal");
 
     //zmienić z value inputa na faktyczną wartość z backendu
-    if (value !== "00.00 $") {
+    if (value == "00.00 $") {
       modal.style.display = "none";
     }
   });

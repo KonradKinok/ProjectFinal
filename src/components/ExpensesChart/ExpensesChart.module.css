@@ -46,7 +46,6 @@
 /* Tablety (768px+) */
 @media (min-width: 768px) {
   .chart-main-container {
-    
     font-size: var(--font-size-12);
     padding: 50px 30px 44px 20px;
     margin: 40px 0 80px;

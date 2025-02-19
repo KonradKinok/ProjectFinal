@@ -7,43 +7,62 @@ import { IncomeDetailedReport } from "../../components/IncomeDetailedReport/Inco
 import { IncomeChart } from "../../components/IncomeChart/IncomeChart";
 import css from "./ReportIncomePage.module.css";
 
+const dataFromDB = //format danych z backendu - do usunięcia
+{
+  "incomes": {
+    "total": 18000,
+    "incomesData": {
+      "Salary": {
+        "total": 12000,
+        "Awans": 5000,
+        "Pensja": 7000
+      },
+      "Add. Income": {
+        "total": 6000,
+        "Umowa": 4500,
+        "Wynajem": 1500
+      }
+    }
+  },
+  "expenses": {
+    "total": 5200,
+    "expensesData": {
+      "Transport": {
+        "total": 4000,
+        "Wyjazd": 3500,
+        "Przyjazd": 500
+      },
+      "Alcohol": {
+        "total": 1200,
+        "Piwo": 150,
+        "Drink": 1050
+      }
+    }
+  }
+}
+
 const ReportIncomePage = () => {
   const [date, setDate] = useState(new Date());
-  const [totalExpenses, setTotalExpenses] = useState(0);
-  const [totalIncome, setTotalIncome] = useState(0);
+  const [selectedIcon, setSelectedIcon] = useState(null);
+  const [selectedIncome, setSelectedIncome] = useState(null);
+
+  const getSelectedExpenses = (selectedIcon, incomesData) => {
+    if (selectedIcon && incomesData[selectedIcon]) {
+      const selectedIncome = { ...incomesData[selectedIcon] };
+      delete selectedIncome.total;
+      return selectedIncome;
+    }
+    return null;
+  };
 
   useEffect(() => {
-    const fetchTransactionData = async () => {
-      try {
-        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    if (dataFromDB && dataFromDB.incomes.incomesData) {
+      const selected = getSelectedExpenses(selectedIcon, dataFromDB.incomes.incomesData);
 
-        // const response = await fetch(`http://localhost:3001/transaction/period-data?date=${formattedDate}`, {
-        const response = await fetch(`http://localhost:3001/transaction?date=${formattedDate}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer token`,
-          },
-        });
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(errorData.message || "Unknown error");
-        }
-
-        const data = await response.json();
-        const transaction = data[0]; //to delete
-        console.log({ transaction })
-        setTotalExpenses(transaction.expenses.total || 0); //need to change from transaction to data
-        setTotalIncome(transaction.incomes.total || 0);
-      } catch (error) {
-        console.error("Error fetching transaction data:", error);
-        setTotalExpenses(0);
-        setTotalIncome(0);
-      }
-    };
-
-    fetchTransactionData();
-  }, [date]);
+      setSelectedIncome(selected);
+      console.log("Income Zaznaczona ikona:", selectedIcon, "Dane:", selected, "dataFromDB: ", dataFromDB.incomes.incomesData);
+    }
+  }, [selectedIcon]);
 
 
   return (
@@ -55,13 +74,13 @@ const ReportIncomePage = () => {
       </div>
 
       <div className={css["reports-page-second-container"]}>
-        <IncomeExpensesComparison expenses={totalExpenses} income={totalIncome} />
+        <IncomeExpensesComparison expenses={dataFromDB.expenses.total} income={dataFromDB.incomes.total} />
       </div>
       <div className={css["reports-page-third-container"]}>
-        <IncomeDetailedReport />
+        <IncomeDetailedReport transactionsData={dataFromDB} selectedIcon={selectedIcon} setSelectedIcon={setSelectedIcon} />
       </div>
       <div className={css["reports-page-fourth-container"]}>
-        <IncomeChart />
+        <IncomeChart income={selectedIncome} />
       </div>
     </div>
   );

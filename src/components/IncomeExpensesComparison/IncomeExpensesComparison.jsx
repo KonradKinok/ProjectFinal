@@ -5,8 +5,7 @@ import css from "./IncomeExpensesComparison.module.css";
 export const IncomeExpensesComparison = ({ expenses, income }) => {
 
     const formatCurrency = (value) => {
-        const numericValue = typeof value === "number" ? value : parseFloat(value);
-        return numericValue.toLocaleString("fr-FR", {
+        return value.toLocaleString("fr-FR", {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         }).replace(",", ".");

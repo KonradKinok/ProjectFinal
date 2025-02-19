@@ -1,94 +1,150 @@
+import React from "react";
 import PropTypes from "prop-types";
 import { ExpensesIncomeIcon } from "../ExpensesIncomeIcon/ExpencesIncomeIcon";
-import { TRANSACTION } from "../IncomeDetailedReport";
 import css from "./ExpensesIncomeGroupIcons.module.css";
 
-const dataToGroupIconsExpenses = [ //to delete
-  {
-    name: "Products",
-    iconName: "icon-icon-products",
-    amount: "5000"
-  },
-  {
-    name: "Alcohol",
-    iconName: "icon-icon-alcohol",
-    amount: "3000"
-  },
-  {
-    name: "Entertainment",
-    iconName: "icon-icon-entertainment",
-    amount: "2400"
-  },
-  {
-    name: "Health",
-    iconName: "icon-icon-health",
-    amount: "2200"
-  },
-  {
-    name: "Transport",
-    iconName: "icon-icon-transport",
-    amount: "2000"
-  },
-  {
-    name: "Housing",
-    iconName: "icon-icon-housing",
-    amount: "1800"
-  },
-  {
-    name: "Technique",
-    iconName: "icon-icon-technique",
-    amount: "1500"
-  },
-  {
-    name: "Communal, Communnication",
-    iconName: "icon-icon-communal",
-    amount: "900"
-  },
-  {
-    name: "Sports, Hobbies",
-    iconName: "icon-icon-sport",
-    amount: "800"
-  },
-  {
-    name: "Education",
-    iconName: "icon-icon-education",
-    amount: "800"
-  },
-
-  {
-    name: "Other",
-    iconName: "icon-icon-other",
-    amount: "200"
-  },
-]
-
-const dataToGroupIconsIncome = [ //to delete
+const dataToGroupIconsIncome = [
   {
     name: "Salary",
     iconName: "icon-icon-additional-income",
-    amount: "455000"
   },
   {
     name: "Add. Income",
     iconName: "icon-icon-salary",
-    amount: "1500"
   },
 ]
 
-export const ExpensesIncomeGroupIcons = ({ expensesIncomeText }) => {
-  const selectedData =
-    expensesIncomeText === TRANSACTION.EXPENSES ? dataToGroupIconsExpenses : dataToGroupIconsIncome; //to change to data from the server or props
+export const ExpensesIncomeGroupIcons = ({ transactionsData, selectedIcon, setSelectedIcon }) => {
+
+  const dataIcons = mapExpensesData(
+    dataToGroupIconsIncome,
+    transactionsData.incomes.incomesData
+  );
+
+  const handleIconClick = (name) => {
+    setSelectedIcon(name);
+  };
 
   return (
     <div className={css["reports-group-icons-main-container"]}>
-      {selectedData.map(({ name, iconName, amount }) => (
-        <ExpensesIncomeIcon key={name} name={name} iconName={iconName} amount={amount} />
+      {dataIcons.map(({ name, iconName, amount }, index) => (
+        <React.Fragment key={name}>
+          <ExpensesIncomeIcon
+            name={name}
+            iconName={iconName}
+            amount={amount}
+            isSelected={selectedIcon === name}
+            onClick={() => handleIconClick(name)}
+          />
+          {(index + 1) % 3 === 0 && (
+            <hr className={css["reports-icon-vector"]} />
+          )}
+        </React.Fragment>
       ))}
+      {dataIcons.length % 3 !== 0 && (
+        <hr className={css["reports-icon-vector"]} />
+      )}
     </div>
   );
 };
 
+function mapExpensesData(dataToGroupIcons, dataFromDB) {
+  const expensesData = dataFromDB || {};
+
+  return dataToGroupIcons.map(({ name, iconName }) => {
+    const normalizedName = name.toLowerCase().replace(/\s+/g, "");
+
+    const matchedExpense = Object.keys(expensesData).find((expenseName) => {
+      const normalizedExpenseName = expenseName.toLowerCase().replace(/\s+/g, "");
+      return normalizedExpenseName === normalizedName;
+    });
+
+    return {
+      name,
+      iconName,
+      amount: matchedExpense ? expensesData[matchedExpense].total : 0,
+    };
+  });
+}
+
 //PropTypes from ExpensesDetailedReport
 ExpensesIncomeGroupIcons.propTypes = {
-  expensesIncomeText: PropTypes.string.isRequired,
-}; 
+  transactionsData: PropTypes.arrayOf(PropTypes.object),
+  selectedIcon: PropTypes.string,
+  setSelectedIcon: PropTypes.func.isRequired,
+};
+
+
+// const dataToGroupIconsIncome = [
+//   {
+//     nameDb: "Salary",
+//     name: "Salary",
+//     iconName: "icon-icon-additional-income",
+//   },
+//   {
+//     nameDb: "Add.Income",
+//     name: "Add. Income",
+//     iconName: "icon-icon-salary",
+//   },
+// ]
+// export const ExpensesIncomeGroupIcons = ({ transactionsData, selectedIcon, setSelectedIcon }) => {
+
+//   const dataIcons = mapExpensesData(
+//     dataToGroupIconsIncome,
+//     transactionsData.incomes
+//   );
+
+//   const handleIconClick = (name) => {
+//     setSelectedIcon(name);
+//   };
+//   console.log("Inc.GropupIc", transactionsData)
+//   console.log("transactionsData", transactionsData.incomes.incomesData)
+//   return (
+//     <div className={css["reports-group-icons-main-container"]}>
+//       {dataIcons.map(({ name, iconName, amount, nameDb }, index) => (
+//         <React.Fragment key={name}>
+//           <ExpensesIncomeIcon
+//             name={name}
+//             iconName={iconName}
+//             amount={amount}
+//             isSelected={selectedIcon === nameDb}
+//             onClick={() => handleIconClick(nameDb)}
+//           />
+//           {(index + 1) % 3 === 0 && (
+//             <hr className={css["reports-icon-vector"]} />
+//           )}
+//         </React.Fragment>
+//       ))}
+//       {dataIcons.length % 3 !== 0 && (
+//         <hr className={css["reports-icon-vector"]} />
+//       )}
+//     </div>
+//   );
+// };
+
+
+// function mapExpensesData(dataToGroupIconsIncome, dataFromDB) {
+//   const { incomesData } = dataFromDB || {}; // Wyciągamy dane dochodów z bazy (domyślnie pusty obiekt)
+//   if (!incomesData) {
+//     return dataToGroupIconsIncome.map(({ name, iconName }) => ({
+//       name,
+//       iconName,
+//       amount: 0,
+//       nameDb: "",
+//     }));
+//   }
+
+//   return dataToGroupIconsIncome.map(({ nameDb, name, iconName }) => {
+//     const matchedIncome = incomesData[nameDb];
+
+//     return {
+//       name,
+//       iconName,
+//       amount: matchedIncome ? matchedIncome.total : 0,
+//       nameDb,
+//     };
+//   });
+// }
+
+
+
